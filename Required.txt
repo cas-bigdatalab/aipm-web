@@ -1,0 +1,7 @@
+django==1.11
+dlib
+pillow
+numpy
+opencv-python-headless
+
+hyperlpr
