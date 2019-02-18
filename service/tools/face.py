@@ -46,23 +46,52 @@ def extract_faces_feature(img:np.array)->np.array:
     return np.array(data)
    
 
-def compute_distance_of_features(feature1:np.array,feature2:np.array):
+def compute_distance_of_features(features1:np.array,features2:np.array):
     """
-    计算人脸相似度
+    计算特征之间的距离
     """
-    if feature1.shape != feature2.shape and feature1.shape[0]!=1:
-        return -1
-    temp = feature1[0] - feature2[0]
-    e = np.linalg.norm(temp, axis=0, keepdims=True)  # 计算欧式距离
-    return 1-e[0]
+    if features1.shape[-1] != features2.shape[-1] or features1.shape[0] == 0:
+        return None
+    temp = features1 - features2
+    e = np.linalg.norm(temp, axis=1)  # 计算欧式距离
+    return e
 
 
 def compute_face_similarity(req_file1:"UploadedFile", req_file2:"UploadedFile")->float:
+    """计算人脸相似度: 要求每张图片中均仅有一张人脸"""
     img1_array = load_image_from_request_file(req_file1)
     img2_array = load_image_from_request_file(req_file2)
 
     img1_faces = extract_faces_feature(img1_array)
     img2_faces = extract_faces_feature(img2_array)
     if len(img1_faces) == 0 or len(img2_faces) == 0:
-        return 0
-    return compute_distance_of_features(img1_faces, img2_faces)
+        return -1        
+    distances =  compute_distance_of_features(img1_faces, img2_faces)
+    if distances == None:
+        return -1
+    min_distance = min(distances)
+    if min_distance != -1:
+        return 1 - min_distance
+    else:
+        return -1
+
+
+def is_face_in_photo(face_req_file: "UploadedFile", photo_req_file: "UploadedFile") -> bool:
+    """判断<face_req_file>图片中的人脸是否在<photo_req_file>图片中:
+        如果存在相似度大于0.5 的，则认为是同一个人脸
+    """
+    face_img_array = load_image_from_request_file(face_req_file)
+    photo_img_array = load_image_from_request_file(photo_req_file)
+
+    faces = extract_faces_feature(face_img_array)
+    photo_faces = extract_faces_feature(photo_img_array)
+    if len(faces) == 0 or len(photo_faces) == 0:
+        return False
+    distances = compute_distance_of_features(faces[:1], photo_faces)
+    similarities = 1-distances
+    sim = max(similarities)
+    if sim > 0.5:
+        return True
+    else:
+        return False
+
