@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
-from .forms import FaceForm, PlateForm
+from .forms import FaceForm, PlateForm, BinClassifyForm
 from .tools.face import compute_face_similarity
 from .tools.lpr import recognize_plate_number
+from .tools.classify import bin_dogorcat
 # Create your views here.
 
 
@@ -56,7 +57,28 @@ def plate_recognition(request):
 
     return render(request, 'plate.html', {'form': form1})
 
+@csrf_exempt
 
+def dogorcat(request):
+    """
+    猫狗图像分类
+    """
+    if request.method == "POST":
+        dic = {"res": True, "value":"", "error":""}
+        form1 = BinClassifyForm(data=request.POST, files=request.FILES)
+        if not form1.is_valid():
+            dic["res"] = False
+            dic["error"] = "form is not valid"
+        else:
+            req_file1 = form1.cleaned_data['image1']
+            res = bin_dogorcat(req_file1)
+            dic["value"] = res
+
+        return JsonResponse(dic)
+
+    form1 = BinClassifyForm()
+
+    return render(request, 'binaryClassify.html', {'form': form1})
 
 
             

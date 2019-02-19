@@ -12,3 +12,6 @@ class FaceForm(forms.Form):
 
 class PlateForm(forms.Form):
     image1 = forms.FileField(label="FaceImage1")
+
+class BinClassifyForm(forms.Form):
+    image1 = forms.FileField(label="Image")
