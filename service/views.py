@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
-from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm
+from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm
 from .tools.face import compute_face_similarity, is_face_in_photo
 from .tools.lpr import recognize_plate_number
 from .tools.classify import bin_dogorcat
+from .tools.ASR.asr import asr_mandarin
 # Create your views here.
 
 
@@ -103,6 +104,28 @@ def dogorcat(request):
     form1 = BinClassifyForm()
 
     return render(request, 'binaryClassify.html', {'form': form1})
+
+@csrf_exempt
+def mandarin_asr(request):
+    """
+    普通话语音识别
+    """
+    if request.method == "POST":
+        dic = {"res": True, "value":"", "error":""}
+        form1 = ASRForm(data=request.POST, files=request.FILES)
+        if not form1.is_valid():
+            dic["res"] = False
+            dic["error"] = "form is not valid"
+        else:
+            req_file1 = form1.cleaned_data['audio1']
+            res = asr_mandarin(req_file1)
+            dic["value"] = res
+
+        return JsonResponse(dic)
+
+    form1 = ASRForm()
+
+    return render(request, 'asr.html', {'form': form1})
 
 
             

@@ -15,3 +15,6 @@ class PlateForm(forms.Form):
 
 class BinClassifyForm(forms.Form):
     image1 = forms.FileField(label="Image")
+
+class ASRForm(forms.Form):
+    audio1 =forms.FileField(label="Audio")
