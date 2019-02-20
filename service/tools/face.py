@@ -67,7 +67,7 @@ def compute_face_similarity(req_file1:"UploadedFile", req_file2:"UploadedFile")-
     if len(img1_faces) == 0 or len(img2_faces) == 0:
         return -1        
     distances =  compute_distance_of_features(img1_faces, img2_faces)
-    if distances == None:
+    if distances is None:
         return -1
     min_distance = min(distances)
     if min_distance != -1:
