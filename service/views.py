@@ -16,7 +16,7 @@ def face_similarity(request):
     计算两张图片中的人脸相似度
     """
     if request.method =="POST":
-        dic = {"res":True, "value":-1, "error":""}
+        dic = {"res":True, "value":[], "error":""}
         form1 = FaceForm(data=request.POST, files=request.FILES)
         if not form1.is_valid():
             dic["res"] = False

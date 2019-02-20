@@ -57,23 +57,22 @@ def compute_distance_of_features(features1:np.array,features2:np.array):
     return e
 
 
-def compute_face_similarity(req_file1:"UploadedFile", req_file2:"UploadedFile")->float:
-    """计算人脸相似度: 要求每张图片中均仅有一张人脸"""
+def compute_face_similarity(req_file1:"UploadedFile", req_file2:"UploadedFile")->[]:
+    """计算图片中的人脸相似度: 返回列表存储的(m,n)矩阵，m-req_file1的人脸数,n-req_file2的人脸数"""
     img1_array = load_image_from_request_file(req_file1)
     img2_array = load_image_from_request_file(req_file2)
 
     img1_faces = extract_faces_feature(img1_array)
     img2_faces = extract_faces_feature(img2_array)
     if len(img1_faces) == 0 or len(img2_faces) == 0:
-        return -1        
-    distances =  compute_distance_of_features(img1_faces, img2_faces)
-    if distances is None:
-        return -1
-    min_distance = min(distances)
-    if min_distance != -1:
-        return 1 - min_distance
-    else:
-        return -1
+        return []
+    sim_list = []
+    for f in img1_faces:
+        distances1 =  compute_distance_of_features(f, img2_faces)
+        print(distances1)
+        sims = 1 - distances1
+        sim_list.append(sims.tolist())
+    return sim_list
 
 
 def is_face_in_photo(face_req_file: "UploadedFile", photo_req_file: "UploadedFile") -> bool:

@@ -6,6 +6,7 @@ asrPath=os.path.join(settings.BASE_DIR,"service/tools/ASR/")
 sys.path.append(os.path.abspath(asrPath)) 
 from SpeechModel251 import ModelSpeech
 from LanguageModel import ModelLanguage
+import keras
 
 modelpath = os.path.join(asrPath,"model_speech/")
 datapath = os.path.join(asrPath,"tempAudio.wav")
@@ -28,6 +29,7 @@ def load_data(req_file: "UploadedFile", mode="RGB")->"numpy.array or None":
 
 def asr_mandarin(req_file:"UploadedFile"):
     load_data(req_file)
+    keras.backend.clear_session()
     ms = ModelSpeech(datapath)
     ms.LoadModel(modelpath + 'speech_model251_e_0_step_12000.model')
 
