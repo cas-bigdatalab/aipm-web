@@ -69,7 +69,6 @@ def compute_face_similarity(req_file1:"UploadedFile", req_file2:"UploadedFile")-
     sim_list = []
     for f in img1_faces:
         distances1 =  compute_distance_of_features(f, img2_faces)
-        print(distances1)
         sims = 1 - distances1
         sim_list.append(sims.tolist())
     return sim_list
