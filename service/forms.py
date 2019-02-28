@@ -18,3 +18,6 @@ class BinClassifyForm(forms.Form):
 
 class ASRForm(forms.Form):
     audio1 =forms.FileField(label="Audio")
+
+class SentimentForm(forms.Form):
+    text = forms.CharField(label="Text")

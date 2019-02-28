@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
-from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm
+from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm, SentimentForm
 from .tools.face import compute_face_similarity, is_face_in_photo
 from .tools.lpr import recognize_plate_number
 from .tools.classify import bin_dogorcat
 from .tools.ASR.asr import asr_mandarin
+from .tools.Sentiment.Sentiment_analysis import analysis 
 # Create your views here.
 
 
@@ -127,5 +128,25 @@ def mandarin_asr(request):
 
     return render(request, 'asr.html', {'form': form1})
 
+@csrf_exempt
+def sentiment(request):
+    """
+    中文短文本情感极性分类
+    """
+    if request.method == "POST":
+        dic = {"res": True, "value":"", "error":""}
+        form1 = SentimentForm(data=request.POST, files=request.FILES)
+        if not form1.is_valid():
+            dic["res"] = False
+            dic["error"] = "form is not valid"
+        else:
+            text = form1.cleaned_data['text']
+            res = analysis(text)
+            dic["value"] = res
 
+        return JsonResponse(dic)
+
+    form1 = SentimentForm()
+
+    return render(request, 'sentiment.html', {'form': form1})
             
