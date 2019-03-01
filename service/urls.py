@@ -1,7 +1,7 @@
 # from django.urls import path
 from django.conf.urls import url
 
-from .views import face_similarity, face_in_photo, plate_recognition, dogorcat, mandarin_asr, sentiment
+from .views import face_similarity, face_in_photo, plate_recognition, dogorcat, mandarin_asr, sentiment, text_segment
 
 urlpatterns = [
     url(r'face/similarity/$', face_similarity),
@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'plate/$', plate_recognition),
     url(r'classify/dogorcat/$', dogorcat),
     url(r'asr/$', mandarin_asr),
-    url(r'sentiment/classifier',sentiment)
+    url(r'sentiment/classifier', sentiment),
+    url(r'text/segment/$', text_segment)
 ]

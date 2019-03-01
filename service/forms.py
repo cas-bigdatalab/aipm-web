@@ -13,11 +13,18 @@ class FaceInPhotoForm(forms.Form):
 class PlateForm(forms.Form):
     image1 = forms.FileField(label="FaceImage1")
 
+
 class BinClassifyForm(forms.Form):
     image1 = forms.FileField(label="Image")
+
 
 class ASRForm(forms.Form):
     audio1 =forms.FileField(label="Audio")
 
+
 class SentimentForm(forms.Form):
-    text = forms.CharField(label="Text")
+    text = forms.CharField(label="Text", widget=forms.Textarea)
+
+
+class TextSegmentForm(forms.Form):
+    text = forms.CharField(label="Text", widget=forms.Textarea)

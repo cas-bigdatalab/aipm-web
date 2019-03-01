@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
-from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm, SentimentForm
+from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm, SentimentForm ,TextSegmentForm
 from .tools.face import compute_face_similarity, is_face_in_photo
 from .tools.lpr import recognize_plate_number
 from .tools.classify import bin_dogorcat
 from .tools.ASR.asr import asr_mandarin
-from .tools.Sentiment.Sentiment_analysis import analysis 
+from .tools.Sentiment.Sentiment_analysis import analysis
+from .tools.segment import segment_text
 # Create your views here.
 
 
@@ -150,3 +151,25 @@ def sentiment(request):
 
     return render(request, 'sentiment.html', {'form': form1})
             
+
+@csrf_exempt
+def text_segment(request):
+    """
+    中文句子分词
+    """
+    if request.method == "POST":
+        dic = {"res": True, "value": "", "error": ""}
+        form1 = TextSegmentForm(data=request.POST, files=request.FILES)
+        if not form1.is_valid():
+            dic["res"] = False
+            dic["error"] = "form is not valid"
+        else:
+            text = form1.cleaned_data['text']
+            res = segment_text(text)
+            dic["value"] = res
+
+        return JsonResponse(dic)
+
+    form1 = TextSegmentForm()
+
+    return render(request, 'segment.html', {'form': form1})
