@@ -6,3 +6,4 @@ opencv-python-headless
 
 hyperlpr
 jieba
+keras
