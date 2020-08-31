@@ -1,18 +1,25 @@
-Environment: CentOS8
+Environment: CentOS7/8
 
-打开fastest mirror功能
+
+## 1. 打开fastest mirror功能(仅centos8，可选)
+```
 vi /etc/dnf/dnf.conf
 fastestmirror=True
 sudo dnf clean all
 sudo dnf makecache
+```
 
 
-安装docker
+## 2. 安装docker
+
+```
 sudo yum install -y yum-utils  device-mapper-persistent-data  lvm2
 sudo yum-config-manager  --add-repo   https://download.docker.com/linux/centos/docker-ce.repo
 yum install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
 sudo yum install docker-ce docker-ce-cli
+```
 
+```
 启动，验证版本
 sudo systemctl start docker
 docker --version
@@ -20,18 +27,36 @@ docker --version
 开机启动
 systemctl enable docker.service
 systemctl start docker.service
+```
 
 
----- inner the container----
-下载镜像
-docker pull centos:centos7
+## 3. 拉取镜像
+```
+docker pull airzihao/aipm:aipm_web0.1  #网速问题，最好直接scp
+
+导入镜像
+docker import aipm_web_01.tar
 创建容器
-docker  run  -dit  --name=aipmv0.1_base  镜像 id  /bin/bash
+docker  run  -ditp 8081:8081  --name=aipmv0.1_base  镜像id  /bin/bash
 进入容器
 docker exec -it aipmv0.1_base /bin/bash
 
+cd /home/aipm-web
+nohup python3 manage.py runserver 0.0.0.0:8081 &
+```
+
+## 测试
+```
+浏览器访问该机器的8081端口
+```
 
 
+
+
+
+
+## 创建新镜像（!!!若需要）
+```
 docker内操作：
 
 yum换源：
@@ -85,6 +110,4 @@ pip3 install jieba
 yum install libSM-1.2.2-2.el7.x86_64 --setopt=protected_multilib=false
 yum install libXrender.x86_64 -y
 yum install libXext-1.3.3-3.el7.x86_64 -y
-
-cd aipm-web
-nohup python3 manage.py runserver 0.0.0.0:8081 &
+```
