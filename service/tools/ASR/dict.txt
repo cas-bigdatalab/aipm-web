@@ -114,7 +114,7 @@ chang3	场厂敞氅昶惝
 chang4	唱畅倡怅鬯
 chao1	超抄吵钞绰剿焯怊
 chao2	朝潮嘲巢晁炒
-chao3	炒吵的蛋
+chao3	炒吵
 chao4	耖
 che1	车砗
 che3	扯
@@ -275,6 +275,7 @@ fang1	方芳妨坊邡枋钫
 fang2	房防妨坊肪鲂
 fang3	访仿纺彷舫紡
 fang4	放
+fang5	坊
 fei1	非飞啡菲扉霏妃绯蜚鲱
 fei2	肥腓淝
 fei3	菲匪诽斐蜚翡悱篚榧
@@ -383,7 +384,7 @@ hen4	恨
 heng1	哼亨
 heng2	横衡恒蘅珩桁
 heng4	横
-hng5	哼
+heng5	哼
 hong1	轰哄烘薨訇
 hong2	红洪鸿宏虹弘泓闳蕻黉荭
 hong3	哄
@@ -443,7 +444,7 @@ jie1	接结节街阶皆揭楷嗟秸疖喈
 jie2	结节杰捷截洁劫竭睫桔拮孑诘桀碣偈颉讦婕羯鲒解結
 jie3	解姐
 jie4	界解价介借戒届藉诫芥疥蚧骱
-jie5	家价姐
+jie5	姐
 jin1	今金禁津斤筋巾襟矜衿
 jin3	尽仅紧谨锦瑾馑卺廑堇槿
 jin4	进近尽仅禁劲晋浸靳缙烬噤觐荩赆妗
@@ -492,7 +493,7 @@ keng1	坑吭铿
 kong1	空倥崆箜
 kong3	恐孔倥
 kong4	空控
-kou1	抠芤眍q
+kou1	抠芤眍
 kou3	口
 kou4	扣寇叩蔻筘
 ku1	哭枯窟骷刳堀轱
@@ -521,7 +522,7 @@ la1	拉啦喇垃邋
 la2	拉喇旯砬邋
 la3	拉喇
 la4	落拉辣腊蜡剌瘌
-la5	蓝啦
+la5	啦
 lai2	来莱徕涞崃铼來
 lai4	赖睐癞籁赉濑
 lan2	兰蓝栏拦篮澜婪岚斓阑褴镧谰
@@ -570,7 +571,7 @@ lie5	咧
 lin2	林临秘邻琳淋霖麟鳞磷嶙辚粼遴啉瞵
 lin3	凛懔檩廪
 lin4	淋吝躏赁蔺膦
-ling1	拎
+lin1	拎
 ling2	令灵零龄凌玲铃陵伶聆囹棱菱苓翎棂瓴绫酃泠羚蛉柃鲮领岭
 ling3	领令岭
 ling4	令另呤
@@ -673,6 +674,7 @@ na5	呐
 nai3	氖乃奶妳
 nai4	耐奈
 nan2	南男难楠喃
+nan3	腩蝻赧
 nan4	难
 nang2	囊
 nao1	孬
@@ -682,7 +684,7 @@ nao4	闹淖
 ne2	哪
 ne5	呢吶
 nei3	馁
-nei4	内內
+nei4	内
 nen4	嫩
 neng2	能
 ni1	妮妞
@@ -705,7 +707,7 @@ ning3	拧
 ning4	拧泞宁
 niu2	牛
 niu3	扭钮纽
-nin4	拗
+niu4	拗
 nong1	浓脓
 nong2	浓农侬
 nong4	弄

@@ -1,9 +1,11 @@
 from django import forms
 
+class FaceFeatureForm(forms.Form):
+    image = forms.FileField(label="FaceImage")
+
 class FaceForm(forms.Form):
     image1 = forms.FileField(label="FaceImage1")
     image2 = forms.FileField(label="FaceImage2")
-
 
 class FaceInPhotoForm(forms.Form):
     image1 = forms.FileField(label="FaceImage")

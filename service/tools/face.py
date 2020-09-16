@@ -14,8 +14,6 @@ from .image import load_image_from_request_file
 MODEL_DIR = os.path.join(settings.BASE_DIR, "ai_models/dlib")  # dlib库使用的相关model文件目录
 
 
-
-
 # 使用cnn进行人脸识别（没有gpu会比较慢）
 # cnn_detector = dlib.cnn_face_detection_model_v1(
 #     os.path.join(MODEL_DIR, "mmod_human_face_detector.dat"))

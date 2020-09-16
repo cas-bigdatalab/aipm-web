@@ -2,15 +2,33 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
-from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm, SentimentForm ,TextSegmentForm
+from .forms import FaceForm, FaceInPhotoForm, PlateForm, BinClassifyForm, ASRForm, SentimentForm ,TextSegmentForm, FaceFeatureForm
 from .tools.face import compute_face_similarity, is_face_in_photo
 from .tools.lpr import recognize_plate_number
 from .tools.classify import bin_dogorcat
-from .tools.ASR.asr import asr_mandarin
+from .tools.BaiduASR import baidu_asr
 from .tools.Sentiment.Sentiment_analysis import analysis
 from .tools.segment import segment_text
+from .tools.faceFeature import getFaceFeatures
 # Create your views here.
 
+@csrf_exempt
+def face_feature(request):
+    if request.method == "POST":
+        dic = {"res":True, "value":[], "error":""}
+        form1 = FaceFeatureForm(data=request.POST, files=request.FILES)
+        if not form1.is_valid():
+            dic["res"] = False
+            dic["error"] = "form is not valid"
+        else:
+            req_file = form1.cleaned_data['image']
+            feature = getFaceFeatures(req_file)
+            if feature.all() != None:
+                dic['value'] = feature.tolist()
+                dic['error'] = None
+        return JsonResponse(dic)
+    form1 = FaceFeatureForm()
+    return render(request, "face_feature.html", {'form': form1})
 
 @csrf_exempt
 def face_similarity(request):
@@ -120,7 +138,7 @@ def mandarin_asr(request):
             dic["error"] = "form is not valid"
         else:
             req_file1 = form1.cleaned_data['audio1']
-            res = asr_mandarin(req_file1)
+            res = baidu_asr(req_file1)
             dic["value"] = res
 
         return JsonResponse(dic)

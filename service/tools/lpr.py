@@ -5,9 +5,9 @@
 
 from hyperlpr import *
 import cv2
-
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8')
 from .image import load_image_from_request_file
-
 
 def recognize_plate_number(req_image_file: "UploadedFile") -> str :
     """

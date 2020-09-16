@@ -32,9 +32,9 @@ class ModelSpeech(): # 语音模型类
 	def __init__(self, datapath):
 		'''
 		初始化
-		默认输出的拼音的表示大小是1422，即1421个拼音+1个空白块
+		默认输出的拼音的表示大小是1424，即1423个拼音+1个空白块
 		'''
-		MS_OUTPUT_SIZE = 1422
+		MS_OUTPUT_SIZE = 1424
 		self.MS_OUTPUT_SIZE = MS_OUTPUT_SIZE # 神经网络最终输出的每一个字符向量维度的大小
 		#self.BATCH_SIZE = BATCH_SIZE # 一次训练的batch
 		self.label_max_string_length = 64
@@ -126,7 +126,7 @@ class ModelSpeech(): # 语音模型类
 		
 		model = Model(inputs=[input_data, labels, input_length, label_length], outputs=loss_out)
 		
-		#model.summary()
+		model.summary()
 		
 		# clipnorm seems to speeds up convergence
 		#sgd = SGD(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True, clipnorm=5)
@@ -140,7 +140,7 @@ class ModelSpeech(): # 语音模型类
 		test_func = K.function([input_data], [y_pred])
 		
 		#print('[*提示] 创建模型成功，模型编译成功')
-		#print('[*Info] Create Model Successful, Compiles Model Successful. ')
+		print('[*Info] Create Model Successful, Compiles Model Successful. ')
 		return model, model_data
 		
 	def ctc_lambda_func(self, args):
@@ -197,8 +197,11 @@ class ModelSpeech(): # 语音模型类
 		'''
 		保存模型参数
 		'''
-		self._model.save_weights(filename+comment+'.model')
+		self._model.save_weights(filename + comment + '.model')
 		self.base_model.save_weights(filename + comment + '.model.base')
+		# 需要安装 hdf5 模块
+		self._model.save(filename + comment + '.h5')
+		self.base_model.save(filename + comment + '.base.h5')
 		f = open('step'+ModelName+'.txt','w')
 		f.write(filename+comment)
 		f.close()
@@ -396,8 +399,8 @@ if(__name__=='__main__'):
 	
 	#import tensorflow as tf
 	#from keras.backend.tensorflow_backend import set_session
-	#os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-	#进行配置，使用70%的GPU
+	#os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+	#进行配置，使用95%的GPU
 	#config = tf.ConfigProto()
 	#config.gpu_options.per_process_gpu_memory_fraction = 0.95
 	#config.gpu_options.allow_growth=True   #不全部占满显存, 按需分配
@@ -426,7 +429,7 @@ if(__name__=='__main__'):
 	ms = ModelSpeech(datapath)
 	
 	
-	#ms.LoadModel(modelpath + 'speech_model251_e_0_step_12000.model')
+	#ms.LoadModel(modelpath + 'speech_model251_e_0_step_625000.model')
 	ms.TrainModel(datapath, epoch = 50, batch_size = 16, save_step = 500)
 	
 	#t1=time.time()
