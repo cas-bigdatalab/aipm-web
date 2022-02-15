@@ -9,7 +9,7 @@ from .tools.classify import bin_dogorcat
 from .tools.BaiduASR import baidu_asr
 from .tools.Sentiment.Sentiment_analysis import analysis
 from .tools.segment import segment_text
-from .tools.faceFeature import getFaceFeatures
+from .tools.faceFeature_cacheable import getFaceFeatures
 # Create your views here.
 
 @csrf_exempt
